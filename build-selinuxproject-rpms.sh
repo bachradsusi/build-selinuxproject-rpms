@@ -49,6 +49,8 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 		gitrev=$setools3_gitrev
 		git_dir=$setools3_dir
 	fi
+
+	# checkout or pull a package
 	pushd $BUILDDIR/packages/
 	if [ ! -d $package ]; then
 		if [ $package = "setools" ]; then
@@ -66,6 +68,18 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 		cd -
 	fi
 	popd
+
+	# bump the package relase
+	pushd $BUILDDIR/packages/$package
+	if grep -q "gitrev $gitrev_s" $package.spec; then
+		popd
+		continue
+	fi
+	rpmdev-bumpspec -c "build from $gitrev" $package.spec
+	sed -i "s/^\%global gitrev .*/\%global gitrev $gitrev_s/" $package.spec
+	popd
+
+	# update source tarballs
 	if [[ $package != "setools" ]]; then
 		pushd $BUILDDIR/selinux.git
 		git archive --format=tar HEAD $package/ | gzip > $BUILDDIR/packages/$package/$package-2.5-$gitrev_s.tar.gz
@@ -80,16 +94,11 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 		popd
 	fi
 
-	pushd $BUILDDIR/packages/$package
-	if grep -q "gitrev $gitrev_s" $package.spec; then
-		continue
-	fi
-	rpmdev-bumpspec -c "build from $gitrev" -r $package.spec
-	sed -i "s/^\%global gitrev .*/\%global gitrev $gitrev_s/" $package.spec
-	popd
+	# build src.rpm
 	rpmbuild --define "_sourcedir $BUILDDIR/packages/$package/" --define "_srcrpmdir $BUILDDIR/SRPMS" --define "_rpmdir $BUILDDIR/RPMS" --define "_builddir $BUILDDIR/BUILD" -bs $BUILDDIR/packages/$package/$package.spec
 	package_verrel=`rpm -q --qf "%{VERSION}-%{RELEASE}  " --specfile packages/$package/$package.spec | cut -f 1 -d " "`
 
+	# build packages
 	if [[ -n $MOCKBUILD ]]; then
 		mock -r selinux-x86_64 --resultdir=$BUILDDIR/RPMS/$package --rebuild $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm
 		mock -r selinux-x86_64 --update $BUILDDIR/RPMS/$package/$package*$package_verrel.*.rpm | :
@@ -99,9 +108,10 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 		copr-cli build  plautrba/selinux-master http://plautrba.fedorapeople.org/selinux-master/$package-$package_verrel.src.rpm
 	fi
 
+	# update package's spec.file
 	pushd $BUILDDIR/packages/$package/
 	git add $package.spec
-	git commit -m "rebuild from $gitrev"
+	git commit -m "$package-$package_verrel - rebuild from $gitrev_s"
 	popd
 
 	if [[ -n $INTERACTIVE ]]; then
