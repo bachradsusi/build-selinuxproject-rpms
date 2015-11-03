@@ -56,7 +56,7 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 		if [ $package = "setools" ]; then
 			git clone ssh://git@pagure.io/setools3.git setools
 		else
-			fedpkg clone $package
+			fedpkg clone -a $package
 			cd $package
 			git checkout private-upstream-master
 			fedpkg sources
