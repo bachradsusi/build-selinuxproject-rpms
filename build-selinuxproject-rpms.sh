@@ -99,13 +99,13 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 	package_verrel=`rpm -q --qf "%{VERSION}-%{RELEASE}  " --specfile packages/$package/$package.spec | cut -f 1 -d " "`
 
 	# build packages
-	if [[ -n $MOCKBUILD ]]; then
+	if [[ -n $COPRBUILD ]]; then
+		scp $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm fedora:public_html/selinux-master
+		copr-cli build  plautrba/selinux-master http://plautrba.fedorapeople.org/selinux-master/$package-$package_verrel.src.rpm
+	else
 		mock -r selinux-x86_64 --resultdir=$BUILDDIR/RPMS/$package --rebuild $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm
 		mock -r selinux-x86_64 --update $BUILDDIR/RPMS/$package/$package*$package_verrel.*.rpm | :
 		mock -r selinux-x86_64 --install $BUILDDIR/RPMS/$package/$package*$package_verrel*.rpm | :
-	else
-		scp $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm fedora:public_html/selinux-master
-		copr-cli build  plautrba/selinux-master http://plautrba.fedorapeople.org/selinux-master/$package-$package_verrel.src.rpm
 	fi
 
 	# update package's spec.file
