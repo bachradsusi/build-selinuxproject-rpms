@@ -33,9 +33,13 @@ Install dependencies:
 
 For local mock builds you need to prepare `selinux-86_64` build repository:
 
-    $ sudo cp /etc/mock/fedora-rawhide-x86_64.cfg /etc/mock/selinux-x86_64.cfg
-    $ sudo sed -i "s/config_opts['root'] = 'fedora-23-x86_64'/config_opts['root'] = 'selinux-x86_64'/"
+    # sudo -i
+    # cp /etc/mock/fedora-rawhide-x86_64.cfg /etc/mock/selinux-x86_64.cfg
+    # sed -i "s/config_opts['root'] = 'fedora-23-x86_64'/config_opts['root'] = 'selinux-x86_64'/" /etc/mock/selinux-x86_64.cfg
+    # echo -e "config_opts['cleanup_on_success'] = 0\nconfig_opts['cleanup_on_failure'] = 0\nconfig_opts['clean'] = False" >> /etc/mock/selinux-x86_64.cfg
+
     $ mock -r selinux-x86_64 --init
+    $ mock -r selinux-x86_64 --install libsemanage-devel libsemanage-static libsepol-static libsepol-devel
     
 ### Execution
 
