@@ -2,9 +2,12 @@
 
 set -e
 
-mkdir -p ~/devel/build/build-selinuxproject-rpms/{packages,RPMS,SRPMS,BUILD}
+BUILDDIR=`pwd`
 
-cd ~/devel/build/build-selinuxproject-rpms
+mkdir -p $BUILDDIR/build-selinuxproject-rpms/{packages,RPMS,SRPMS,BUILD}
+
+cd $BUILDDIR/build-selinuxproject-rpms
+
 BUILDDIR=`pwd`
 
 if [[ ! -d selinux.git ]]; then

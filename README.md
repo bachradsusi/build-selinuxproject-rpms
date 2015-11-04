@@ -45,14 +45,14 @@ For local mock builds you need to prepare `selinux-86_64` build repository:
 
     $ ./build-selinuxproject-rpms.sh
 
-The scripts creates its directory structure in *~/devel/build/build-selinuxproject-rpms*
+The scripts creates its directory structure in a current directory:
 
-    ./SRPMS
-    ./BUILD
-    ./packages
-    ./setools3.git
-    ./selinux.git
-    ./RPMS
+    build-selinuxproject-rpms/SRPMS
+    build-selinuxproject-rpms/BUILD
+    build-selinuxproject-rpms/packages
+    build-selinuxproject-rpms/setools3.git
+    build-selinuxproject-rpms/selinux.git
+    build-selinuxproject-rpms/RPMS
 
 rpms are build in *BUILD* directory from src.rpm in *SRPMS* with results stored in *RPMS*.
 
