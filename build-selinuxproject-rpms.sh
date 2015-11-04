@@ -3,6 +3,8 @@
 set -e
 
 BUILDDIR=`pwd`
+SCRIPTDIR=`dirname $0`
+EDSCRIPT=`realpath $SCRIPTDIR/`/patch-selinux-policy.spec.ed
 
 mkdir -p $BUILDDIR/build-selinuxproject-rpms/{packages,RPMS,SRPMS,BUILD}
 
@@ -42,7 +44,7 @@ setools3_dir=setools3.git
 
 popd
 
-for package in libsepol libselinux setools libsemanage policycoreutils checkpolicy; do
+for package in libsepol libselinux setools libsemanage policycoreutils checkpolicy selinux-policy; do
 	if [[ $package != "setools" ]]; then
 		gitrev_s=$selinux_gitrev_s
 		gitrev=$selinux_gitrev
@@ -61,13 +63,23 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 		else
 			fedpkg clone -a $package
 			cd $package
-			git checkout private-upstream-master
+			if [[ $package != "selinux-policy" ]]; then
+				git checkout private-upstream-master
+			else
+				ed selinux-policy.spec < $EDSCRIPT
+			fi
 			fedpkg sources
 			cd -
 		fi
 	else
 		cd $package
-		git pull
+		if [[ $package != "selinux-policy" ]]; then
+			git pull
+		else
+			git fetch
+			git reset --hard origin/master
+			ed selinux-policy.spec < $EDSCRIPT
+		fi
 		cd -
 	fi
 	popd
@@ -83,7 +95,7 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 	popd
 
 	# update source tarballs
-	if [[ $package != "setools" ]]; then
+	if [[ $package != "setools" && $package != "selinux-policy" ]]; then
 		pushd $BUILDDIR/selinux.git
 		git archive --format=tar HEAD $package/ | gzip > $BUILDDIR/packages/$package/$package-2.5-$gitrev_s.tar.gz
 		if [[ $package = "policycoreutils" ]]; then

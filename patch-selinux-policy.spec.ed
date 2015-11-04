@@ -1,0 +1,19 @@
+,s/%define POLICYVER 29/%define POLICYVER 30/p
+,s/%define POLICYCOREUTILSVER 2.4-0/%define POLICYCOREUTILSVER 2.5-0/p
+,s/%define CHECKPOLICYVER 2.4-0/%define CHECKPOLICYVER 2.5-0/p
+/rm -rf %{buildroot}%{_sysconfdir}\/selinux\/%1\/.*policy.kern
+d
+/%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}\/selinux\/%1\/seusers
+a
+%config(noreplace) %verify(not md5 size mtime) %{_sharedstatedir}/selinux/%1/active/seusers \
+.
+/%verify(not md5 size mtime) %{_sysconfdir}\/selinux\/%1\/policy\/policy.%{POLICYVER} 
+a
+%verify(not md5 size mtime) %{_sharedstatedir}/selinux/%1/active/policy.kern \
+.
+/%dir %{_sysconfdir}\/selinux\/%1\/contexts\/files 
+a
+%verify(not md5 size mtime) %{_sharedstatedir}/selinux/%1/active/file_contexts \
+.
+w
+q

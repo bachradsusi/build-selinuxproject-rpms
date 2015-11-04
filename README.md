@@ -12,6 +12,7 @@ https://github.com/SELinuxProject/selinux.
 * libsemanage
 * policycoreutils
 * checkpolicy
+* selinux-policy
 
 Package sources are tracked in *private-upstream-master* branches in
 [Fedora dist git repository](http://pkgs.fedoraproject.org/cgit) with an exception for *setools* which is storedn in [pagure.io/setools3](https://pagure.io/setools3).
@@ -29,7 +30,7 @@ Builds are stored in [plautrba/selinux-master](https://copr.fedoraproject.org/co
 
 Install dependencies:
 
-    $ dnf install audit-libs-devel bison bzip2-devel dbus-devel dbus-glib-devel flex flex-devel flex-static glib2-devel libcap-devel libcap-ng-devel pam-devel pcre-devel python-devel setools-devel swig ustr-devel rpm-build fedpkg
+    $ dnf install audit-libs-devel bison bzip2-devel dbus-devel dbus-glib-devel flex flex-devel flex-static glib2-devel libcap-devel libcap-ng-devel pam-devel pcre-devel python-devel setools-devel checkpolicy policycoreutils-devel swig ustr-devel rpm-build fedpkg ed
 
 For local mock builds you need to prepare `selinux-86_64` build repository:
 
