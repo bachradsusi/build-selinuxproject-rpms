@@ -7,7 +7,7 @@ mkdir -p ~/devel/build/build-selinuxproject-rpms/{packages,RPMS,SRPMS,BUILD}
 cd ~/devel/build/build-selinuxproject-rpms
 BUILDDIR=`pwd`
 
-if [ ! -d selinux.git ]; then
+if [[ ! -d selinux.git ]]; then
 	git clone https://github.com/SELinuxProject/selinux.git selinux.git
 else
 	cd selinux.git
@@ -23,7 +23,7 @@ selinux_dir=selinux.git
 
 popd
 
-if [ ! -d setools3.git ]; then
+if [[ ! -d setools3.git ]]; then
 	git clone https://github.com/TresysTechnology/setools3.git setools3.git
 else
 	cd setools3.git
@@ -52,8 +52,8 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 
 	# checkout or pull a package
 	pushd $BUILDDIR/packages/
-	if [ ! -d $package ]; then
-		if [ $package = "setools" ]; then
+	if [[ ! -d $package ]]; then
+		if [[ $package = "setools" ]]; then
 			git clone https://pagure.io/setools3.git setools
 		else
 			fedpkg clone -a $package
