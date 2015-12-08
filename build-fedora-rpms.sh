@@ -114,8 +114,8 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 		continue
 		# git reset --hard HEAD~
 	fi
-	rpmdev-bumpspec -c "build from $gitrev" $package.spec
 	sed -i "s/^\%global gitrev .*/\%global gitrev $gitrev_s/" $package.spec
+	rpmdev-bumpspec -c "build from $gitrev" $package.spec
 	popd
 
 	# update source tarballs
