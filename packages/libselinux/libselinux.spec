@@ -6,12 +6,12 @@
 %define libsepolver 2.4-1
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
-%global gitrev d257b02
+%global gitrev a2a3c6d
 
 Summary: SELinux library and simple utilities
 Name: libselinux
 Version: 2.5
-Release: 0.1.%{gitrev}%{?dist}
+Release: 0.2.%{gitrev}%{?dist}
 License: Public Domain
 Group: System Environment/Libraries
 # https://github.com/SELinuxProject/selinux/wiki/Releases
@@ -254,6 +254,9 @@ rm -rf %{buildroot}
 %{ruby_vendorarchdir}/selinux.so
 
 %changelog
+* Tue Dec 08 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.2.d257b02
+- build from a2a3c6d03fc0f11102f9ca94e0ac00061c7c1dde
+
 * Thu Oct 15 2015 Robert Kuska <rkuska@redhat.com> - 2.4-5
 - Rebuilt for Python3.5 rebuild
 

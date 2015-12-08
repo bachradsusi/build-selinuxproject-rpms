@@ -1,9 +1,9 @@
-%global gitrev d257b02
+%global gitrev a2a3c6d
 
 Summary: SELinux binary policy manipulation library 
 Name: libsepol
 Version: 2.5
-Release: 0.1.git%{gitrev}%{?dist}
+Release: 0.2.git%{gitrev}%{?dist}
 License: LGPLv2+
 Group: System Environment/Libraries
 Source: libsepol-%{gitrev}.tar.gz
@@ -103,6 +103,9 @@ exit 0
 %{_libdir}/libsepol.so.1
 
 %changelog
+* Tue Dec 08 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.2.gitd257b02
+- build from a2a3c6d03fc0f11102f9ca94e0ac00061c7c1dde
+
 * Tue Aug 25 2015 Michal Srb <msrb@redhat.com> - 2.4-3
 - Improve compatibility with Python 3 SWIG bindings
 - Resolves: rhbz#1247714

@@ -1,12 +1,12 @@
 %define libselinuxver 2.4-1
 %define libsepolver 2.4-1
 
-%global gitrev d257b02
+%global gitrev a2a3c6d
 
 Summary: SELinux policy compiler
 Name: checkpolicy
 Version: 2.5
-Release: 0.1.git%{gitrev}%{?dist}
+Release: 0.2.git%{gitrev}%{?dist}
 License: GPLv2
 Group: Development/System
 # Source: https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20150202/checkpolicy-2.4.tar.gz
@@ -61,6 +61,9 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_bindir}/sedispol
 
 %changelog
+* Tue Dec 08 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.2.gitd257b02
+- build from a2a3c6d03fc0f11102f9ca94e0ac00061c7c1dde
+
 * Tue Jul 21 2015 Petr Lautrbach <plautrba@redhat.com> 2.4-1.1
 - Update to 2.4 release
 
