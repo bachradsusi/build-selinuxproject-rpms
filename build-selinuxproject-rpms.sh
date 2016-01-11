@@ -110,12 +110,12 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 	fi
 
 	# build src.rpm
-	rpmbuild --define "_sourcedir $BUILDDIR/packages/$package/" --define "_srcrpmdir $BUILDDIR/SRPMS" --define "_rpmdir $BUILDDIR/RPMS" --define "_builddir $BUILDDIR/BUILD" -bs $BUILDDIR/packages/$package/$package.spec
-	package_verrel=`rpm -q --qf "%{VERSION}-%{RELEASE}  " --specfile packages/$package/$package.spec | cut -f 1 -d " "`
+	rpmbuild --define "_sourcedir $BUILDDIR/packages/$package/" --define "_srcrpmdir $BUILDDIR/SRPMS" --define "_rpmdir $BUILDDIR/RPMS" --define "_builddir $BUILDDIR/BUILD" --define "dist .fc24" -bs $BUILDDIR/packages/$package/$package.spec
+	package_verrel=`rpm -q --define "dist .fc24" --qf "%{VERSION}-%{RELEASE}  " --specfile packages/$package/$package.spec | cut -f 1 -d " "`
 
 	# build packages
 	if [[ -n $COPRBUILD ]]; then
-		scp $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm fedora:public_html/selinux-master
+		scp $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm fedorapeople:public_html/selinux-master
 		copr-cli build  plautrba/selinux-master http://plautrba.fedorapeople.org/selinux-master/$package-$package_verrel.src.rpm
 	else
 		mock -r selinux-x86_64 --resultdir=$BUILDDIR/RPMS/$package --rebuild $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm
