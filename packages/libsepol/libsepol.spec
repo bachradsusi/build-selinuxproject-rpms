@@ -1,9 +1,9 @@
-%global gitrev a2a3c6d
+%global gitrev b3c1d4e
 
 Summary: SELinux binary policy manipulation library 
 Name: libsepol
 Version: 2.5
-Release: 0.2.git%{gitrev}%{?dist}
+Release: 0.3.git%{gitrev}%{?dist}
 License: LGPLv2+
 Group: System Environment/Libraries
 Source: libsepol-%{gitrev}.tar.gz
@@ -103,6 +103,9 @@ exit 0
 %{_libdir}/libsepol.so.1
 
 %changelog
+* Mon Dec 21 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.3.gitb3c1d4e
+- build from b3c1d4e425edac6557bb2ced03b2480ccf494a8f
+
 * Tue Dec 08 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.2.gitd257b02
 - build from a2a3c6d03fc0f11102f9ca94e0ac00061c7c1dde
 

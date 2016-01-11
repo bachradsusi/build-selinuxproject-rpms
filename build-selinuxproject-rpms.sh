@@ -44,7 +44,7 @@ setools3_dir=setools3.git
 
 popd
 
-for package in libsepol libselinux setools libsemanage policycoreutils checkpolicy selinux-policy; do
+for package in libsepol libselinux setools libsemanage policycoreutils checkpolicy secilc; do
 	if [[ $package != "setools" ]]; then
 		gitrev_s=$selinux_gitrev_s
 		gitrev=$selinux_gitrev

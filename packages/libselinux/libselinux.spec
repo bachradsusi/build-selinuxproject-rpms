@@ -6,12 +6,12 @@
 %define libsepolver 2.4-1
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
-%global gitrev a2a3c6d
+%global gitrev f590d37
 
 Summary: SELinux library and simple utilities
 Name: libselinux
 Version: 2.5
-Release: 0.2.%{gitrev}%{?dist}
+Release: 0.5.%{gitrev}%{?dist}.1
 License: Public Domain
 Group: System Environment/Libraries
 # https://github.com/SELinuxProject/selinux/wiki/Releases
@@ -108,6 +108,7 @@ needed for developing SELinux applications.
 %patch1 -p2 -b .rhat
 
 %build
+export DISABLE_RPM="y"
 export LDFLAGS="%{?__global_ldflags}"
 
 # To support building the Python wrapper against multiple Python runtimes
@@ -119,7 +120,7 @@ BuildPythonWrapper() {
   # Perform the build from the upstream Makefile:
   make \
     PYTHON=$BinaryName \
-    LIBDIR="%{_libdir}" CFLAGS="-g %{optflags}" %{?_smp_mflags} \
+    LIBDIR="%{_libdir}" CFLAGS="-g %{optflags} -DDISABLE_RPM" %{?_smp_mflags} \
     pywrap
 }
 
@@ -254,6 +255,15 @@ rm -rf %{buildroot}
 %{ruby_vendorarchdir}/selinux.so
 
 %changelog
+* Wed Jan 06 2016 Petr Lautrbach - 2.5-0.5.f590d37.1
+- build from f590d37704178b6d026bfcc19baf7cf89a56b90f
+
+* Wed Jan 06 2016 Petr Lautrbach - 2.5-0.4.f590d37.1
+- build from f590d37704178b6d026bfcc19baf7cf89a56b90f
+
+* Mon Dec 21 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.3.b3c1d4e.1
+- build from b3c1d4e425edac6557bb2ced03b2480ccf494a8f
+
 * Tue Dec 08 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.2.d257b02
 - build from a2a3c6d03fc0f11102f9ca94e0ac00061c7c1dde
 

@@ -4,12 +4,12 @@
 %global	libselinuxver	2.5-0
 %global	sepolgenver	1.2.2
 
-%global gitrev a2a3c6d
+%global gitrev f590d37
 
 Summary: SELinux policy core utilities
 Name:	 policycoreutils
 Version: 2.5
-Release: 0.4.git%{gitrev}%{?dist}
+Release: 0.5.git%{gitrev}%{?dist}
 License: GPLv2
 Group:	 System Environment/Base
 # https://github.com/SELinuxProject/selinux/wiki/Releases
@@ -410,6 +410,9 @@ The policycoreutils-restorecond package contains the restorecond service.
 %systemd_postun_with_restart restorecond.service
 
 %changelog
+* Wed Jan 06 2016 Petr Lautrbach - 2.5-0.5.gitf590d37
+- build from f590d37704178b6d026bfcc19baf7cf89a56b90f
+
 * Tue Dec 08 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.4.gitd257b02
 - build from a2a3c6d03fc0f11102f9ca94e0ac00061c7c1dde
 

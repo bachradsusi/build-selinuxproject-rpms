@@ -4,12 +4,12 @@
 %define libsepolver 2.4-1
 %define libselinuxver 2.4-1
 
-%global gitrev a2a3c6d
+%global gitrev f590d37
 
 Summary: SELinux binary policy manipulation library 
 Name: libsemanage
 Version: 2.5
-Release: 0.3.git%{gitrev}%{?dist}
+Release: 0.4.git%{gitrev}%{?dist}
 License: LGPLv2+
 Group: System Environment/Libraries
 #Source: https://raw.githubusercontent.com/wiki/SELinuxProject/selinux/files/releases/20150202/libsemanage-%{version}.tar.gz
@@ -197,6 +197,9 @@ rm -rf ${RPM_BUILD_ROOT}
 %endif # if with_python3
 
 %changelog
+* Wed Jan 06 2016 Petr Lautrbach - 2.5-0.4.gitf590d37
+- build from f590d37704178b6d026bfcc19baf7cf89a56b90f
+
 * Tue Dec 08 2015 Petr Lautrbach <plautrba@redhat.com> - 2.5-0.3.gitd257b02
 - build from a2a3c6d03fc0f11102f9ca94e0ac00061c7c1dde
 
