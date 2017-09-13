@@ -75,7 +75,7 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 	else
 		cd $package
 		if [[ $package != "selinux-policy" ]]; then
-			git pull --rebase
+			git pull --rebase || :
 		else
 			git fetch
 			git reset --hard origin/master
@@ -139,7 +139,7 @@ for package in libsepol libselinux setools libsemanage policycoreutils checkpoli
 
 	# build packages
 	if [[ -n $COPRBUILD ]]; then
-		scp $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm fedora:public_html/$FEDORASRPMSTORE
+		scp $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm fedorapeople:public_html/$FEDORASRPMSTORE
 		copr-cli build  plautrba/selinux http://plautrba.fedorapeople.org/$FEDORASRPMSTORE/$package-$package_verrel.src.rpm
 	else
 		mock -r $MOCKROOT --resultdir=$BUILDDIR/RPMS/$package --rebuild $BUILDDIR/SRPMS/$package-$package_verrel.src.rpm
